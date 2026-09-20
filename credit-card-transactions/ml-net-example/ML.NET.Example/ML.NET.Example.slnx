@@ -1,4 +1,3 @@
 <Solution>
-  <Project Path="ML.NET.API/ML.NET.API.csproj" />
   <Project Path="ML.NET.Training/ML.NET.Training.csproj" />
 </Solution>

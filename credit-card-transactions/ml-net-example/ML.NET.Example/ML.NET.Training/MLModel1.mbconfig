@@ -8,7 +8,7 @@
     "KeepPunctuations": false,
     "AllowQuoting": false,
     "Type": "TabularFile",
-    "FilePath": "C:\\Users\\paves\\Documents\\GitHub\\neural-net-classifier-demo\\ml-net-example\\card_transaction.v1.csv",
+    "FilePath": "C:\\Users\\paves\\Documents\\GitHub\\neural-net-classifier-demo\\credit-card-transactions\\ml-net-example\\card_transaction.v1.csv",
     "Delimiter": ",",
     "DecimalMarker": ".",
     "HasHeader": true,
