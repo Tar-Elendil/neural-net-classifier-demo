@@ -1,0 +1,443 @@
+﻿{
+  "Scenario": "Classification",
+  "DataSource": {
+    "Version": 3,
+    "EscapeCharacter": "\"",
+    "ReadMultiLines": false,
+    "KeepDiacritics": false,
+    "KeepPunctuations": false,
+    "AllowQuoting": true,
+    "Type": "TabularFile",
+    "FilePath": "card_transaction.v1.csv",
+    "Delimiter": ",",
+    "DecimalMarker": ".",
+    "HasHeader": true,
+    "ColumnProperties": [
+      {
+        "ColumnName": "User",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Card",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Year",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Month",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Day",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Time",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Amount",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Use Chip",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Merchant Name",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Merchant City",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Merchant State",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Zip",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "MCC",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Errors?",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "String",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 5
+      },
+      {
+        "ColumnName": "Is Fraud?",
+        "ColumnPurpose": "Label",
+        "ColumnDataFormat": "String",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 5
+      }
+    ]
+  },
+  "Environment": {
+    "Type": "LocalCPU",
+    "Version": 1
+  },
+  "RunHistory": {
+    "Version": 3,
+    "Type": "Result",
+    "Trials": [
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "LightGbmMulti",
+        "Score": 0.73932189994565012,
+        "RuntimeInSeconds": 13.457,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4 * e5",
+          "e0": {
+            "OutputColumnNames": [
+              "Time",
+              "Amount",
+              "Use Chip",
+              "Merchant City",
+              "Merchant State"
+            ],
+            "InputColumnNames": [
+              "Time",
+              "Amount",
+              "Use Chip",
+              "Merchant City",
+              "Merchant State"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "User",
+              "Card",
+              "Year",
+              "Month",
+              "Day",
+              "Merchant Name",
+              "Zip",
+              "MCC"
+            ],
+            "InputColumnNames": [
+              "User",
+              "Card",
+              "Year",
+              "Month",
+              "Day",
+              "Merchant Name",
+              "Zip",
+              "MCC"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "Time",
+              "Amount",
+              "Use Chip",
+              "Merchant City",
+              "Merchant State",
+              "User",
+              "Card",
+              "Year",
+              "Month",
+              "Day",
+              "Merchant Name",
+              "Zip",
+              "MCC"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e3": {
+            "OutputColumnName": "Is Fraud?",
+            "InputColumnName": "Is Fraud?",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e4": {
+            "NumberOfLeaves": 1464,
+            "MinimumExampleCountPerLeaf": 20,
+            "LearningRate": 0.22434528377450544,
+            "NumberOfTrees": 4,
+            "SubsampleFraction": 0.67996546402605107,
+            "MaximumBinCountPerFeature": 310,
+            "FeatureFraction": 0.99999999,
+            "L1Regularization": 2.1459552537250275E-10,
+            "L2Regularization": 0.32421088561664135,
+            "LabelColumnName": "Is Fraud?",
+            "FeatureColumnName": "Features"
+          },
+          "e5": {
+            "OutputColumnName": "PredictedLabel",
+            "InputColumnName": "PredictedLabel"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "LightGbmMulti",
+        "Score": 0.640451261404715,
+        "RuntimeInSeconds": 18.471,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4 * e5",
+          "e0": {
+            "OutputColumnNames": [
+              "Time",
+              "Amount",
+              "Use Chip",
+              "Merchant City",
+              "Merchant State"
+            ],
+            "InputColumnNames": [
+              "Time",
+              "Amount",
+              "Use Chip",
+              "Merchant City",
+              "Merchant State"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "User",
+              "Card",
+              "Year",
+              "Month",
+              "Day",
+              "Merchant Name",
+              "Zip",
+              "MCC"
+            ],
+            "InputColumnNames": [
+              "User",
+              "Card",
+              "Year",
+              "Month",
+              "Day",
+              "Merchant Name",
+              "Zip",
+              "MCC"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "Time",
+              "Amount",
+              "Use Chip",
+              "Merchant City",
+              "Merchant State",
+              "User",
+              "Card",
+              "Year",
+              "Month",
+              "Day",
+              "Merchant Name",
+              "Zip",
+              "MCC"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e3": {
+            "OutputColumnName": "Is Fraud?",
+            "InputColumnName": "Is Fraud?",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e4": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 20,
+            "LearningRate": 1.0,
+            "NumberOfTrees": 4,
+            "SubsampleFraction": 1.0,
+            "MaximumBinCountPerFeature": 254,
+            "FeatureFraction": 1.0,
+            "L1Regularization": 2E-10,
+            "L2Regularization": 1.0,
+            "LabelColumnName": "Is Fraud?",
+            "FeatureColumnName": "Features"
+          },
+          "e5": {
+            "OutputColumnName": "PredictedLabel",
+            "InputColumnName": "PredictedLabel"
+          }
+        }
+      },
+      {
+        "Version": 1,
+        "Type": "Trial",
+        "TrainerName": "LightGbmMulti",
+        "Score": 0.48860810281912076,
+        "RuntimeInSeconds": 20.315,
+        "Parameter": {
+          "_SCHEMA_": "e0 * e1 * e2 * e3 * e4 * e5",
+          "e0": {
+            "OutputColumnNames": [
+              "Time",
+              "Amount",
+              "Use Chip",
+              "Merchant City",
+              "Merchant State"
+            ],
+            "InputColumnNames": [
+              "Time",
+              "Amount",
+              "Use Chip",
+              "Merchant City",
+              "Merchant State"
+            ]
+          },
+          "e1": {
+            "OutputColumnNames": [
+              "User",
+              "Card",
+              "Year",
+              "Month",
+              "Day",
+              "Merchant Name",
+              "Zip",
+              "MCC"
+            ],
+            "InputColumnNames": [
+              "User",
+              "Card",
+              "Year",
+              "Month",
+              "Day",
+              "Merchant Name",
+              "Zip",
+              "MCC"
+            ]
+          },
+          "e2": {
+            "InputColumnNames": [
+              "Time",
+              "Amount",
+              "Use Chip",
+              "Merchant City",
+              "Merchant State",
+              "User",
+              "Card",
+              "Year",
+              "Month",
+              "Day",
+              "Merchant Name",
+              "Zip",
+              "MCC"
+            ],
+            "OutputColumnName": "Features"
+          },
+          "e3": {
+            "OutputColumnName": "Is Fraud?",
+            "InputColumnName": "Is Fraud?",
+            "AddKeyValueAnnotationsAsText": false
+          },
+          "e4": {
+            "NumberOfLeaves": 4,
+            "MinimumExampleCountPerLeaf": 21,
+            "LearningRate": 0.99999977667298645,
+            "NumberOfTrees": 1563,
+            "SubsampleFraction": 0.99999977667298645,
+            "MaximumBinCountPerFeature": 207,
+            "FeatureFraction": 0.93787083983466568,
+            "L1Regularization": 2E-10,
+            "L2Regularization": 0.99999977667298645,
+            "LabelColumnName": "Is Fraud?",
+            "FeatureColumnName": "Features"
+          },
+          "e5": {
+            "OutputColumnName": "PredictedLabel",
+            "InputColumnName": "PredictedLabel"
+          }
+        }
+      }
+    ],
+    "Estimators": {
+      "e0": "OneHotEncoding",
+      "e1": "ReplaceMissingValues",
+      "e2": "Concatenate",
+      "e3": "MapValueToKey",
+      "e4": "LightGbmMulti",
+      "e5": "MapKeyToValue"
+    },
+    "Schema": "e0 * e1 * e2 * e3 * e4 * e5",
+    "MetricName": "MacroAccuracy",
+    "ModelFilePath": "MLModel1.mlnet"
+  },
+  "Type": "TrainingConfig",
+  "Version": 5,
+  "TrainingOption": {
+    "Version": 2,
+    "MaxModelToExplore": 3,
+    "Subsampling": true,
+    "Tuner": "eci-cfo",
+    "Type": "ClassificationTrainingOption",
+    "TrainingTime": 7200,
+    "OptimizeMetric": "MacroAccuracy",
+    "LabelColumn": "Is Fraud?",
+    "AvailableTrainers": [
+      "LGBM"
+    ],
+    "ValidationOption": {
+      "Version": 0,
+      "Type": "TrainValidateSplitValidationOption",
+      "SplitRatio": 0.2
+    }
+  }
+}
