@@ -35,3 +35,25 @@ will generate the image locally which may be run with the command
 ```{docker}
 docker run -d -p 8080:8080 ml-net-example
 ```
+
+The API will now be reach on `http://localhost:8080/health` <br>
+The following mock transaction will return a negative result
+```{bash}
+curl --location --request PUT 'http://localhost:8080/api/transactions/verify' \
+--header 'Content-Type: application/json' \
+--data '{
+    "user": 0,
+    "card": 0,
+    "amount": 287.13,
+    "year": 2015,
+    "month": 11,
+    "day": 15,
+    "time": "12:15",
+    "useChip": "Online Transaction",
+    "merchantName": "-8194607650924472520",
+    "merchantCity": "ONLINE",
+    "merchantState": "NaN",
+    "zip": "NaN",
+    "mcc": 3001
+}'
+```
