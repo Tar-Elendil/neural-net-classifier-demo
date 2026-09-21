@@ -2,6 +2,7 @@
 using ML.NET.API.Models;
 using ML.NET.API.Services;
 using ML.NET.API.Validators;
+using System.Net;
 
 namespace ML.NET.API.Controllers;
 
@@ -11,7 +12,7 @@ namespace ML.NET.API.Controllers;
 public class Transactions(IPredictClassifications predictionModel, CardTransactionValidator validator) : ControllerBase
 {
     [HttpPut]
-    [Route("tranactions/verify")]
+    [Route("verify")]
     public IActionResult Verify([FromBody] CardTransaction transaction)
     {
         // Validate input
@@ -28,7 +29,7 @@ public class Transactions(IPredictClassifications predictionModel, CardTransacti
 
         if (isFraud)
         {
-            return Forbid();
+            return StatusCode((int)HttpStatusCode.Forbidden, "Transaction rejected as possible fraud");
         }
 
         return Ok(); 

@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
+using System.Reflection;
 namespace ML_NET_Training
 {
     public partial class MLModel1
@@ -41,7 +42,7 @@ namespace ML_NET_Training
 
             [LoadColumn(6)]
             [ColumnName(@"Amount")]
-            public float Amount { get; set; }
+            public string Amount { get; set; }
 
             [LoadColumn(7)]
             [ColumnName(@"Use Chip")]
@@ -66,10 +67,6 @@ namespace ML_NET_Training
             [LoadColumn(12)]
             [ColumnName(@"MCC")]
             public float MCC { get; set; }
-
-            [LoadColumn(13)]
-            [ColumnName(@"Errors?")]
-            public string Errors_ { get; set; }
 
             [LoadColumn(14)]
             [ColumnName(@"Is Fraud?")]
@@ -104,7 +101,7 @@ namespace ML_NET_Training
             public float[] Time { get; set; }
 
             [ColumnName(@"Amount")]
-            public float Amount { get; set; }
+            public float[] Amount { get; set; }
 
             [ColumnName(@"Use Chip")]
             public float[] Use_Chip { get; set; }
@@ -124,9 +121,6 @@ namespace ML_NET_Training
             [ColumnName(@"MCC")]
             public float MCC { get; set; }
 
-            [ColumnName(@"Errors?")]
-            public float[] Errors_ { get; set; }
-
             [ColumnName(@"Is Fraud?")]
             public uint Is_Fraud_ { get; set; }
 
@@ -143,7 +137,7 @@ namespace ML_NET_Training
 
         #endregion
 
-        private static string MLNetModelPath = Path.GetFullPath("MLModel1.mlnet");
+        private static string MLNetModelPath = Path.Join(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "MLModel1.mlnet");
 
         public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
 

@@ -13,24 +13,24 @@ public class PredictionService : IPredictClassifications
     public bool CheckIfFraud(CardTransaction cardTransaction)
     {
         //Load sample data
-        var sampleData = new MLModel1.ModelInput()
+        var data = new MLModel1.ModelInput()
         {
-            User = 0F,
-            Card = 0F,
-            Year = 2002F,
-            Month = 9F,
-            Day = 1F,
-            Time = @"06:42",
-            Use_Chip = @"Swipe Transaction",
-            Merchant_Name = -7.2761206E+17F,
-            Merchant_City = @"Monterey Park",
-            Merchant_State = @"CA",
-            MCC = 5411F,
-            Errors_ = @"",
+            User = cardTransaction.User,
+            Card = cardTransaction.Card,
+            Amount = $"${cardTransaction.Amount}",
+            Year = cardTransaction.Year,
+            Month = cardTransaction.Month,
+            Day = cardTransaction.Day,
+            Time = cardTransaction.Time.ToString("HH:mm"),
+            Use_Chip = cardTransaction.UseChip,
+            Merchant_Name = long.Parse(cardTransaction.MerchantName),
+            Merchant_City = cardTransaction.MerchantCity,
+            Merchant_State = cardTransaction.MerchantState,
+            MCC = cardTransaction.MCC,
         };
 
         //Load model and predict output
-        var result = MLModel1.Predict(sampleData);
+        var result = MLModel1.Predict(data);
         return result.PredictedLabel == "Yes";
     }
 }

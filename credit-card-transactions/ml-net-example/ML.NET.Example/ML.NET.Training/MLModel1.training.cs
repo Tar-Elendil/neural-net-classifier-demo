@@ -18,7 +18,7 @@ namespace ML_NET_Training
         public const string RetrainFilePath =  @"card_transaction.v1.csv";
         public const char RetrainSeparatorChar = ',';
         public const bool RetrainHasHeader =  true;
-        public const bool RetrainAllowQuoting =  false;
+        public const bool RetrainAllowQuoting =  true;
 
          /// <summary>
         /// Train a new model with the provided dataset.
@@ -91,14 +91,11 @@ namespace ML_NET_Training
         public static IEstimator<ITransformer> BuildPipeline(MLContext mlContext)
         {
             // Data process configuration with pipeline data transformations
-            var pipeline = mlContext.Transforms.Categorical.OneHotEncoding(new []{new InputOutputColumnPair(@"Use Chip", @"Use Chip"),new InputOutputColumnPair(@"Merchant City", @"Merchant City")}, outputKind: OneHotEncodingEstimator.OutputKind.Indicator)      
-                                    .Append(mlContext.Transforms.ReplaceMissingValues(new []{new InputOutputColumnPair(@"User", @"User"),new InputOutputColumnPair(@"Card", @"Card"),new InputOutputColumnPair(@"Year", @"Year"),new InputOutputColumnPair(@"Month", @"Month"),new InputOutputColumnPair(@"Day", @"Day"),new InputOutputColumnPair(@"Amount", @"Amount"),new InputOutputColumnPair(@"Merchant Name", @"Merchant Name"),new InputOutputColumnPair(@"Zip", @"Zip"),new InputOutputColumnPair(@"MCC", @"MCC")}))      
-                                    .Append(mlContext.Transforms.Text.FeaturizeText(inputColumnName:@"Time",outputColumnName:@"Time"))      
-                                    .Append(mlContext.Transforms.Text.FeaturizeText(inputColumnName:@"Merchant State",outputColumnName:@"Merchant State"))      
-                                    .Append(mlContext.Transforms.Text.FeaturizeText(inputColumnName:@"Errors?",outputColumnName:@"Errors?"))      
-                                    .Append(mlContext.Transforms.Concatenate(@"Features", new []{@"Use Chip",@"Merchant City",@"User",@"Card",@"Year",@"Month",@"Day",@"Amount",@"Merchant Name",@"Zip",@"MCC",@"Time",@"Merchant State",@"Errors?"}))      
+            var pipeline = mlContext.Transforms.Categorical.OneHotEncoding(new []{new InputOutputColumnPair(@"Time", @"Time"),new InputOutputColumnPair(@"Amount", @"Amount"),new InputOutputColumnPair(@"Use Chip", @"Use Chip"),new InputOutputColumnPair(@"Merchant City", @"Merchant City"),new InputOutputColumnPair(@"Merchant State", @"Merchant State")}, outputKind: OneHotEncodingEstimator.OutputKind.Indicator)      
+                                    .Append(mlContext.Transforms.ReplaceMissingValues(new []{new InputOutputColumnPair(@"User", @"User"),new InputOutputColumnPair(@"Card", @"Card"),new InputOutputColumnPair(@"Year", @"Year"),new InputOutputColumnPair(@"Month", @"Month"),new InputOutputColumnPair(@"Day", @"Day"),new InputOutputColumnPair(@"Merchant Name", @"Merchant Name"),new InputOutputColumnPair(@"Zip", @"Zip"),new InputOutputColumnPair(@"MCC", @"MCC")}))      
+                                    .Append(mlContext.Transforms.Concatenate(@"Features", new []{@"Time",@"Amount",@"Use Chip",@"Merchant City",@"Merchant State",@"User",@"Card",@"Year",@"Month",@"Day",@"Merchant Name",@"Zip",@"MCC"}))      
                                     .Append(mlContext.Transforms.Conversion.MapValueToKey(outputColumnName:@"Is Fraud?",inputColumnName:@"Is Fraud?",addKeyValueAnnotationsAsText:false))      
-                                    .Append(mlContext.MulticlassClassification.Trainers.LightGbm(new LightGbmMulticlassTrainer.Options(){NumberOfLeaves=4,NumberOfIterations=2193,MinimumExampleCountPerLeaf=20,LearningRate=0.3794274875541188,LabelColumnName=@"Is Fraud?",FeatureColumnName=@"Features",Booster=new GradientBooster.Options(){SubsampleFraction=0.9511673054180205,FeatureFraction=0.9863730079848853,L1Regularization=7.201848777784269E-10,L2Regularization=0.9230565963888508},MaximumBinCountPerFeature=246}))      
+                                    .Append(mlContext.MulticlassClassification.Trainers.LightGbm(new LightGbmMulticlassTrainer.Options(){NumberOfLeaves=1464,NumberOfIterations=4,MinimumExampleCountPerLeaf=20,LearningRate=0.22434528377450544,LabelColumnName=@"Is Fraud?",FeatureColumnName=@"Features",Booster=new GradientBooster.Options(){SubsampleFraction=0.6799654640260511,FeatureFraction=0.99999999,L1Regularization=2.1459552537250275E-10,L2Regularization=0.32421088561664135},MaximumBinCountPerFeature=310}))      
                                     .Append(mlContext.Transforms.Conversion.MapKeyToValue(outputColumnName:@"PredictedLabel",inputColumnName:@"PredictedLabel"));
 
             return pipeline;

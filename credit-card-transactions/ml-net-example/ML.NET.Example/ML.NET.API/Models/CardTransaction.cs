@@ -5,6 +5,7 @@ public class CardTransaction
     public uint User { get; set; } 
     
     public long Card { get; set; }
+    public decimal Amount { get; set; }
     
     public int Year { get; set; }
     

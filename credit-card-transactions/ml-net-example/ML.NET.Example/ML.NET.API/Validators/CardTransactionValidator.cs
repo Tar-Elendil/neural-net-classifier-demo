@@ -9,7 +9,7 @@ public class CardTransactionValidator : AbstractValidator<CardTransaction>
     {
         RuleFor(x => x).NotNull();
         RuleFor(x => x.Card)
-            .GreaterThan(0);
+            .GreaterThanOrEqualTo(0);
         RuleFor(x => x.Year)
             .GreaterThan(1990);
         RuleFor(x => x.Month)
