@@ -15,7 +15,7 @@ namespace ML_NET_Training
 {
     public partial class MLModel1
     {
-        public const string RetrainFilePath =  @"C:\Users\paves\Documents\GitHub\neural-net-classifier-demo\ml-net-example\card_transaction.v1.csv";
+        public const string RetrainFilePath =  @"card_transaction.v1.csv";
         public const char RetrainSeparatorChar = ',';
         public const bool RetrainHasHeader =  true;
         public const bool RetrainAllowQuoting =  false;

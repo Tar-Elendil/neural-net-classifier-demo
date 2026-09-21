@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="ML.NET.API.Tests/ML.NET.API.Tests.csproj" Id="bc518e32-3aaa-4c53-8dc7-3e4d999839fd" />
+  <Project Path="ML.NET.API/ML.NET.API.csproj" Id="4f74ad12-0baf-4964-ba94-d19177dddc4f" />
   <Project Path="ML.NET.Training/ML.NET.Training.csproj" />
 </Solution>

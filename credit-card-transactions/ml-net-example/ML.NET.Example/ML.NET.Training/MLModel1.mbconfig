@@ -8,7 +8,7 @@
     "KeepPunctuations": false,
     "AllowQuoting": false,
     "Type": "TabularFile",
-    "FilePath": "C:\\Users\\paves\\Documents\\GitHub\\neural-net-classifier-demo\\credit-card-transactions\\ml-net-example\\card_transaction.v1.csv",
+    "FilePath": "card_transaction.v1.csv",
     "Delimiter": ",",
     "DecimalMarker": ".",
     "HasHeader": true,
@@ -630,7 +630,7 @@
     },
     "Schema": "e0 * e1 * e2 * e3 * e4 * e5 * e6 * (e7 + e8 + e9 + e10 + e11 + e12 + e13) * e14",
     "MetricName": "MacroAccuracy",
-    "ModelFilePath": "C:\\Users\\paves\\Documents\\GitHub\\neural-net-classifier-demo\\ml-net-example\\ML.NET.Example\\ML.NET.Training\\MLModel1.mlnet"
+    "ModelFilePath": "MLModel1.mlnet"
   },
   "Type": "TrainingConfig",
   "Version": 5,
