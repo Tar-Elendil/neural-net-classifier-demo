@@ -9,8 +9,10 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        // Enables the framework to discover your API controllers
+        // Register controllers
         services.AddControllers();
+
+        services.AddHealthChecks();
 
         // Register Swagger for API documentation
         services.AddEndpointsApiExplorer();
@@ -37,6 +39,8 @@ public class Startup
             app.UseSwagger();
         }
 
+        app.UseHealthChecks("/health");
+
         app.UseHttpsRedirection();
         app.UseRouting();
         app.UseCors(CorsPolicy);
@@ -44,6 +48,7 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
+            endpoints.MapHealthChecks("/health");
         });
     }
 }
