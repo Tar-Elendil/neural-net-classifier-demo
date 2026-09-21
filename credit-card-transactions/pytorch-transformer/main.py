@@ -8,8 +8,6 @@ def main():
         sys.exit(1)
 
     df = pd.read_csv('card_transaction.v1.csv')
-    print(df.head())
-    print(df['Merchant Name'].head())
 
 if __name__ == "__main__":
     main()
