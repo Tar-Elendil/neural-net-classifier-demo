@@ -2,11 +2,16 @@ import torch.nn as nn
 
 class TransactionsModel(nn.Module):
     def __int__(self):
-        super().__init__()
+        super(TransactionsModel, self).__init__()
         # Hidden layers
         self.hidden = nn.Linear(in_features=13, out_features=32, bias=True)
 
-        # Hidden layer 1
+        # Output layer
         self.output = nn.Linear(in_features=32, out_features=1, bias=True)
         
         self.activation = nn.ReLU()
+    
+    def forward(self, x):
+        x = self.activation(self.hidden(x))
+        x = self.output(x)
+        return x
