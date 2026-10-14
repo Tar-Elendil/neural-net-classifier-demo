@@ -43,17 +43,17 @@ def main():
 
     # read data
     df = pd.read_csv('card_transaction.v1.csv')
-    df = df.drop(columns = ['Merchant Name', 'Merchant City', 'Merchant State'])
+    df = df.drop(columns = ['Merchant Name', 'Merchant City', 'Merchant State', 'Errors?'])
 
     # convert to numerical data
     df['Time']=df['Time'].map(convert_time)
     df['Amount']=df['Amount'].map(convert_amount)
 
-    categorical_variables = ['Use Chip']
+    categorical_variables = ['Use Chip', 'Is Fraud?']
     numerics = ['User', 'Card', 'Year', 'Month', 'Day', 'Zip', 'MCC']
     
     # One Hot encode the categorical variables
-    df = pd.get_dummies(df, columns = categorical_variables)
+    df = pd.get_dummies(df, columns = categorical_variables, dtype=float)
 
     # Split into training and test datasets
     test_df = df.sample(frac=0.2, random_state=42)
@@ -65,27 +65,29 @@ def main():
     train_df[numerics]= (train_df[numerics] - means)/sd
     test_df[numerics]= (test_df[numerics] - means)/sd
 
+    # Convert to tensor
+    training_set = torch.from_numpy(train_df.values).float()
+    test_data = torch.from_numpy(test_df.values).float()
+
     # Training loop
     # Loop over epochs and batches.
     # Compute the forward pass, calculate loss, and perform backpropagation.
-    model = SimpleClassifier(num_features=10, num_hidden=64).to(__device__)
-    criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    model = SimpleClassifier(num_features=14, num_hidden=32)
+    criterion = nn.MSELoss()
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
     model.train() # Set model to training mode
 
-    for epoch in range(3):
-        for batch_idx, (data, targets) in enumerate(train_df):
-            data = data.to(__device__).reshape(data.shape[0], -1)  # Flatten images
-            targets = targets.to(__device__)
-            scores = model(data)
-            loss = criterion(scores, targets)
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+    for epoch in range(5):                       # Training for 5 epochs 
+        optimizer.zero_grad()                    # Clear previous gradients 
+        outputs = model(training_set)                # Forward pass 
+        loss = criterion(outputs, training_set)      # Calculate loss 
+        loss.backward()                           # Backward pass to compute gradients 
+        optimizer.step()                         # Update weights 
+        print(f'Epoch [{epoch + 1}/5], Loss: {loss.item():.4f}') 
 
     # Eval model
-    train_acc = check_accuracy(train_df, model)
-    test_acc = check_accuracy(test_df, model)
+    train_acc = check_accuracy(training_set, model)
+    test_acc = check_accuracy(test_data, model)
     print(f"Training Accuracy: {train_acc:.2f}")
     print(f"Test Accuracy: {test_acc:.2f}")
 

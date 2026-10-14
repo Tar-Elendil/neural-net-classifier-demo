@@ -7,7 +7,9 @@ This is a synthetic dataset and the unzipped csv file is ~2GB
 ## Defining the model
 13 inputs
 ### Create Hidden Layers
-Add layers for categorical data. Use OneHotEncoding.
+- Add layers for categorical data. Use OneHotEncoding.
+- Use 1 level of hidden layers for simplicity
+
 
 ### Define Activation function
 use Relu

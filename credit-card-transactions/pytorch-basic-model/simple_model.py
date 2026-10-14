@@ -7,7 +7,7 @@ class SimpleClassifier(nn.Module):
         self.hidden = nn.Linear(in_features=num_features, out_features=num_hidden, bias=True)
 
         # Output layer
-        self.output = nn.Linear(in_features=num_hidden, out_features=1, bias=True)
+        self.output = nn.Linear(in_features=num_hidden, out_features=num_features, bias=True)
         
         self.activation = nn.ReLU()
     
