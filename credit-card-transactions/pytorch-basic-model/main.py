@@ -27,8 +27,6 @@ def check_accuracy(loader, model: nn.Module):
     model.eval()
     with torch.no_grad():
         for x, y in loader:
-            x = x.to(__device__).reshape(x.shape[0], -1)
-            y = y.to(__device__)
             scores = model(x)
             _, predictions = scores.max(1)
             num_correct += (predictions == y).sum()
@@ -52,7 +50,7 @@ def main():
     categorical_variables = ['Use Chip', 'Is Fraud?']
     numerics = ['User', 'Card', 'Year', 'Month', 'Day', 'Zip', 'MCC']
     
-    # One Hot encode the categorical variables
+    # Encode the categorical variables
     df = pd.get_dummies(df, columns = categorical_variables, dtype=float)
 
     # Split into training and test datasets
@@ -65,7 +63,7 @@ def main():
     train_df[numerics]= (train_df[numerics] - means)/sd
     test_df[numerics]= (test_df[numerics] - means)/sd
 
-    # Convert to tensor
+    # Convert to tensors
     training_set = torch.from_numpy(train_df.values).float()
     test_data = torch.from_numpy(test_df.values).float()
 
