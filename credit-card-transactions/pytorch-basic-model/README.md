@@ -26,5 +26,6 @@ get the weights + biases
 - Normalise data to reduce variance
 - Define loss function
 - Make predictions
-- Loop over epochs
+- Run epoch
 - Compare weights against test data
+- If validation error begins to increase. Stop
