@@ -42,6 +42,9 @@ def main():
     df['Amount']=df['Amount'].map(convert_amount)
     df['Is Fraud?']=df['Is Fraud?'].map(convert_IsFraud)
 
+    # fill NaN values
+    df.fillna({'Zip': 0}, inplace=True)
+
     categorical_variables = ['Use Chip']
     numerics = ['User', 'Card', 'Year', 'Month', 'Day', 'Zip', 'MCC']
     
@@ -59,10 +62,10 @@ def main():
     test_df = test_df.drop(columns=['Is Fraud?'])
 
     # Normalise numerical data 
-    #means = train_df[numerics].mean()
-    #sd = train_df[numerics].std()
-    #train_df[numerics]= (train_df[numerics] - means)/sd
-    #test_df[numerics]= (test_df[numerics] - means)/sd
+    means = train_df[numerics].mean()
+    sd = train_df[numerics].std()
+    train_df[numerics]= (train_df[numerics] - means)/sd
+    test_df[numerics]= (test_df[numerics] - means)/sd
 
     # Convert to tensors
     training_set = torch.from_numpy(train_df.values).float()
